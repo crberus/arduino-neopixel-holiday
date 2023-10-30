@@ -2,10 +2,10 @@
 
 #define LED_PIN     6  // Define the digital pin for the LED data
 #define NUM_LEDS    300 // Define the number of LEDs in your strip
-#define BRIGHTNESS  40 // Set the initial brightness (0-255)
+#define BRIGHTNESS  90 // Set the initial brightness (0-255)
 #define DELAY_MS    15 // Delay between LED tests in milliseconds
 
-//CRGB leds[NUM_LEDS];
+//CRGB leds[NUM_LEDS];  // Basic; not using due to switch to defined arrays
 CRGBArray<NUM_LEDS> leds; // Using CRGBArray for better control
 CRGBSet fullSet(leds(0,NUM_LEDS));  // Set array to address entire strip
 CRGBSet firstSet(leds(0,20));  // Set array for a region of LEDs
@@ -27,37 +27,36 @@ void setup() {
   Serial.println("Setting initial LED brightness");
   FastLED.setBrightness(BRIGHTNESS); // Set the brightness
 
-  leds[0] = CRGB::Blue;
+
+  // Glow first LED for about a second to confirm control
+  leds[0] = CRGB::Green; // Set color of first LED 
   FastLED.show();
   delay(1000);
 
-  fullSet = CRGB::DarkRed;
-
+  // Set entire strip to initial color state
+  fullSet = CRGB::DarkRed; 
   FastLED.show();
   delay(1000);
 }
-
-/* void loop() {
-  fullSet = CRGB::Purple;
-  firstSet = CRGB::Red;
-  secondSet = CRGB::Blue;
-  FastLED.show();
-} */
 
 // Flicker entire strip randomly in red
 void loop() {
   Serial.println("Begin main loop");
 
-  Serial.println("Fill full strip to DarkRed");
-  //fullSet = CRGB::DarkRed;
+  leds[0] = CRGB::DarkSlateBlue;
   FastLED.show();
+
+  //Serial.println("Fill full strip to DarkRed");
+  //fullSet = CRGB::DarkRed;
+  //FastLED.show();
 
   Serial.println("Flickering fullSet");
   //firstSet = CRGB::Red;
+  fullSet = CRGB::Red;
   //fill_solid( leds, NUM_LEDS, CRGB::Red );
-  //FastLED.setBrightness(random8(10,90)); // set random brightness for added effect
+  FastLED.setBrightness(random8(10,50)); // set random brightness for added effect
   //fadeLightBy(firstSet, firstSet, random8(10,90));
-  fadeLightBy(firstSet, 300, random8(10,90));
+  //fadeLightBy(firstSet, 300, random8(10,90));
   //FastLED.show(random8(10,90));
   FastLED.show();
   delay(random16(50,200));
@@ -65,9 +64,10 @@ void loop() {
   Serial.println("Filling DarkRed");
   //firstSet = CRGB::DarkRed;
   //fill_solid(leds, NUM_LEDS, CRGB::DarkRed);
-  //fullSet = CRGB::DarkRed;
-  //FastLED.show();
-  //delay(random16(10,100));
+  fullSet = CRGB::DarkRed;
+  FastLED.setBrightness(random8(10,50)); // set random brightness for added effect
+  FastLED.show();
+  delay(random16(20,100));
 
   Serial.println("End main loop");
 }
