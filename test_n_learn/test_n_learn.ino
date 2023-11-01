@@ -58,12 +58,15 @@ void loop() {
   while (flickloop > 0) {
     Serial.println("Starting interior loop");
     Serial.println("Filling fullSet Red");
-    //firstSet = CRGB::Red;
-    
-    fullSet = CRGB::Red;
-    //fill_solid( leds, NUM_LEDS, CRGB::Red );
+    // Randomly select between red and white flicker
+    int colorRand = random(9);  // setup random integer
+    if (colorRand <= 7) { // select color with optional bias
+      fullSet = CRGB::Red;
+    } else {
+      fullSet = CRGB::GhostWhite;
+    }
     Serial.println("Adusting brightness");
-    FastLED.setBrightness(random8(10,50)); // set random brightness for added effect
+    FastLED.setBrightness(random8(10,90)); // set random brightness for added effect
     //fadeLightBy(firstSet, firstSet, random8(10,90));
     //fadeLightBy(firstSet, 300, random8(10,90));
     //FastLED.show(random8(10,90));
@@ -80,7 +83,6 @@ void loop() {
 
     flickloop--;
   }
-
   Serial.println("End main loop");
 }
 
