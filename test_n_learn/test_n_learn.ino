@@ -38,7 +38,7 @@ void setup() {
   // Set entire strip to initial color state
   fullSet = CRGB::DarkRed; 
   FastLED.show();
-  delay(1000);
+  delay(1000);  // take a breather before go-time
 }
 
 // Flicker entire strip randomly in red
@@ -53,13 +53,13 @@ void loop() {
   delay(random16(500,3000));  // ambient solid for multiple seconds (randomly selected)
 
   // Setup nested flicker loop; number of loops (period of time) is set by random function
-  int flickloop = random8(3,16);  // set number of loops to perform randomly
+  byte flickloop = random8(3,16);  // set number of loops to perform randomly
 
   while (flickloop > 0) {
     Serial.println("Starting interior loop");
     Serial.println("Filling fullSet Red");
     // Randomly select between red and white flicker
-    int colorRand = random(9);  // setup random integer
+    byte colorRand = random(9);  // setup random integer
     if (colorRand <= 7) { // select color with optional bias
       fullSet = CRGB::Red;
     } else {
